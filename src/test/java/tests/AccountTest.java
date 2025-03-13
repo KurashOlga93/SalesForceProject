@@ -17,8 +17,8 @@ public class AccountTest extends BaseTest{
         account.setAccountName("account" + random.nextInt(10));
         account.setWebSite("website");
         account.setType("Investor");
-        account.setPhone("80296546637");
         account.setDescription("nothing");
+        account.setPhone("80296546637");
         loginPage.openPage(LOGIN_URL)
                 .login(username, password);
         newAccountModalPage.openPage(NEW_ACCOUNT_MODAL_URL)

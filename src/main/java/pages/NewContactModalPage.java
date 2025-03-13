@@ -4,20 +4,26 @@ import elements.Button;
 import elements.Dropdown;
 import elements.Input;
 import objects.Account;
+import objects.Contact;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
-public class NewAccountModalPage extends BasePage {
+public class NewContactModalPage extends BasePage {
 
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+
+    @FindBy(xpath = "//*[contains(text(), 'Account Name')]/ancestor::*[contains(@slot, 'inputField')]")
+    public WebElement accountNameDropdown;
+
+    @FindBy(xpath = "//ul[@aria-label='Recent Accounts']//li[2]")
+    public WebElement accountDropdownItem;
 
     @FindBy(xpath = "//*[@name = 'SaveEdit']")
     public WebElement saveButton;
@@ -28,26 +34,29 @@ public class NewAccountModalPage extends BasePage {
     @FindBy(xpath = "//*[@name = 'CancelEdit']")
     public WebElement cancelButton;
 
-    public NewAccountModalPage(WebDriver driver) {
+    public NewContactModalPage(WebDriver driver) {
         super(driver);
     }
 
-    public NewAccountModalPage openPage(String url) {
+    public NewContactModalPage openPage(String url) {
         driver.get(url);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("modal-container")));
         return this;
     }
 
-    public void createNewAccount(Account account) {
-        new Input(driver, "Account Name").writeTextToInput(account.getAccountName());
+    public void createNewContact(Contact contact) {
+        new Dropdown(driver, "Salutation").accountSelectOption(contact.getSalutation());
+        new Input(driver, "First Name").writeTextToInput(contact.getContactName());
+        new Input(driver, "Last Name").writeTextToInput(contact.getContactLastName());
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        new Input(driver, "Website").writeTextToInput(account.getWebSite());
+        accountNameDropdown.click();
+        wait.until(ExpectedConditions.visibilityOf((accountDropdownItem)));
+        accountDropdownItem.click();
+        //new Dropdown(driver, "Account name").selectAccountNameFromDropdown(contact.getAccountContactName());
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        new Dropdown(driver, "Type").accountSelectOption(account.getType());
+        new Input(driver, "Description").writeTextToTextArea(contact.getDescription());
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        new Input(driver, "Description").writeTextToTextArea(account.getDescription());
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        new Input(driver, "Phone").writeTextToInput(account.getPhone());
+        new Input(driver, "Phone").writeTextToInput(contact.getContactPhone());
         new Button(driver).clickButton(saveButton);
     }
 }

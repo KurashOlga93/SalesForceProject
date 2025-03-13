@@ -21,6 +21,9 @@ public class BaseTest implements ITestConstants, IConstants {
     HomePage homePage;
     LoginPage loginPage;
     NewAccountModalPage newAccountModalPage;
+    NewContactModalPage newContactModalPage;
+    ContactPage contactPage;
+    ContactListPage contactListPage;
 
     public void initPages(){
         accountPage = new AccountPage(driver);
@@ -28,6 +31,9 @@ public class BaseTest implements ITestConstants, IConstants {
         homePage = new HomePage(driver);
         loginPage = new LoginPage(driver);
         newAccountModalPage = new NewAccountModalPage(driver);
+        newContactModalPage = new NewContactModalPage(driver);
+        contactPage = new ContactPage(driver);
+        contactListPage = new ContactListPage(driver);
     }
 
     @BeforeMethod
@@ -41,7 +47,7 @@ public class BaseTest implements ITestConstants, IConstants {
         prefs.put("profile.default_content_setting_values.notifications", 2);
         options.setExperimentalOption("prefs", prefs);
 
-        driver = new ChromeDriver();
+        driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.manage().window().maximize();
         PageFactory.initElements(driver,this);

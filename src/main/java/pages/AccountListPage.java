@@ -2,8 +2,14 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class AccountListPage extends BasePage {
+
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 
     public static final String TABLE_XPATH = "//table";
     public static final String ACCOUNT_NAME_FIELD_XPATH = TABLE_XPATH + "//a[contains(@title, '%s')]";
@@ -16,6 +22,7 @@ public class AccountListPage extends BasePage {
 
     public AccountListPage openPage(String url) {
         driver.get(url);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//table")));
         return this;
     }
 
