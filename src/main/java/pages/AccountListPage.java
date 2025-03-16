@@ -38,8 +38,8 @@ public class AccountListPage extends BasePage {
         return driver.findElement(By.xpath(String.format(ACCOUNT_OWNER_BY_ACCOUNT_NAME_XPATH, accountName))).getText();
     }
 
-    public AccountPage clickOnAccountName(String accountName) {
+    public AccountCardPage clickOnAccountName(String accountName) {
         driver.findElement(By.xpath(String.format(ACCOUNT_NAME_FIELD_XPATH, accountName))).click();
-        return new AccountPage(driver);
+        return new AccountCardPage(driver);
     }
 }

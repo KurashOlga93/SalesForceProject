@@ -3,7 +3,6 @@ package pages;
 import elements.Button;
 import elements.Dropdown;
 import elements.Input;
-import objects.Account;
 import objects.Contact;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -49,14 +48,13 @@ public class NewContactModalPage extends BasePage {
         new Input(driver, "First Name").writeTextToInput(contact.getContactName());
         new Input(driver, "Last Name").writeTextToInput(contact.getContactLastName());
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        accountNameDropdown.click();
-        wait.until(ExpectedConditions.visibilityOf((accountDropdownItem)));
-        accountDropdownItem.click();
-        //new Dropdown(driver, "Account name").selectAccountNameFromDropdown(contact.getAccountContactName());
+        new Dropdown(driver, "Account Name").contactSelectAccount(contact.getAccountContactName());
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         new Input(driver, "Description").writeTextToTextArea(contact.getDescription());
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         new Input(driver, "Phone").writeTextToInput(contact.getContactPhone());
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        new Input(driver, "Email").writeTextToInput(contact.getContactEmail());
         new Button(driver).clickButton(saveButton);
     }
 }

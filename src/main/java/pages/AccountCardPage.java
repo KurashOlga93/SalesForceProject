@@ -3,11 +3,11 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class AccountPage extends BasePage{
+public class AccountCardPage extends BasePage{
 
     public static final String DATA_BY_FIELD_NAME_XPATH = "//*[@class='record-body-container']//*[text()='%s']";
 
-    public AccountPage(WebDriver driver) {
+    public AccountCardPage(WebDriver driver) {
         super(driver);
     }
 
