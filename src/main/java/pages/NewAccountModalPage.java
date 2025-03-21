@@ -4,19 +4,27 @@ import elements.Button;
 import elements.Dropdown;
 import elements.Input;
 import objects.Account;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 public class NewAccountModalPage extends BasePage {
 
-    @FindBy(name = "SaveEdit")
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+
+    @FindBy(xpath = "//*[@name = 'SaveEdit']")
     public WebElement saveButton;
 
-    @FindBy(name = "SaveAndNew")
+    @FindBy(xpath = "//*[@name = 'SaveAndNew']")
     public WebElement saveAndNewButton;
 
-    @FindBy(name = "CancelEdit")
+    @FindBy(xpath = "//*[@name = 'CancelEdit']")
     public WebElement cancelButton;
 
     public NewAccountModalPage(WebDriver driver) {
@@ -25,14 +33,16 @@ public class NewAccountModalPage extends BasePage {
 
     public NewAccountModalPage openPage(String url) {
         driver.get(url);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("modal-container")));
         return this;
     }
 
     public void createNewAccount(Account account) {
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         new Input(driver, "Account Name").writeTextToInput(account.getAccountName());
         new Input(driver, "Website").writeTextToInput(account.getWebSite());
         new Dropdown(driver, "Type").accountSelectOption(account.getType());
-        new Input(driver, "Description").writeTextToInput(account.getDescription());
+        new Input(driver, "Description").writeTextToTextArea(account.getDescription());
         new Input(driver, "Phone").writeTextToInput(account.getPhone());
         new Button(driver).clickButton(saveButton);
     }
