@@ -44,16 +44,13 @@ public class NewContactModalPage extends BasePage {
     }
 
     public void createNewContact(Contact contact) {
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         new Dropdown(driver, "Salutation").accountSelectOption(contact.getSalutation());
         new Input(driver, "First Name").writeTextToInput(contact.getContactName());
         new Input(driver, "Last Name").writeTextToInput(contact.getContactLastName());
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         new Dropdown(driver, "Account Name").contactSelectAccount(contact.getAccountContactName());
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         new Input(driver, "Description").writeTextToTextArea(contact.getDescription());
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         new Input(driver, "Phone").writeTextToInput(contact.getContactPhone());
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         new Input(driver, "Email").writeTextToInput(contact.getContactEmail());
         new Button(driver).clickButton(saveButton);
     }

@@ -38,14 +38,11 @@ public class NewAccountModalPage extends BasePage {
     }
 
     public void createNewAccount(Account account) {
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         new Input(driver, "Account Name").writeTextToInput(account.getAccountName());
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         new Input(driver, "Website").writeTextToInput(account.getWebSite());
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         new Dropdown(driver, "Type").accountSelectOption(account.getType());
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         new Input(driver, "Description").writeTextToTextArea(account.getDescription());
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         new Input(driver, "Phone").writeTextToInput(account.getPhone());
         new Button(driver).clickButton(saveButton);
     }
